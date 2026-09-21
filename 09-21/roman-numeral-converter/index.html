@@ -135,6 +135,10 @@
     "use strict";
 
     function convertArabicToRoman(number) {
+      if (!Number.isInteger(number) || number < 1 || number > 3999) {
+        throw new Error("A számnak 1 és 3999 közötti egésznek kell lennie.");
+      }
+
       const values = [
         [1000, "M"], [900, "CM"], [500, "D"], [400, "CD"],
         [100, "C"], [90, "XC"], [50, "L"], [40, "XL"],
