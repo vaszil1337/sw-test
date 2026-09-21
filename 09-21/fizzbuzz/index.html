@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>QUnit példa</title>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/qunit@3.0.0-alpha.4/qunit/qunit.css">
+</head>
+
+<body>
+
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+
+<script src="https://unpkg.com/qunit@3.0.0-alpha.4/qunit/qunit.js"></script>
+
+<script>
+
+    function oszthatosag(n, x) {
+        return n % x == 0
+    }
+
+    function oszthatoOttel(n) {
+        return oszthatosag(n, 10)
+    }
+
+    function oszthatoHarommal(n) {
+        return oszthatosag(n, 3)
+    }
+
+    function tartalmaz(n, x) {
+        return String(n).includes(String(x))
+    }
+
+    function fizzbuzz(n) {
+        if(oszthatoHarommal(n) && oszthatoOttel(n)) {
+            return "fizzbuzz"
+        } else if (oszthatoHarommal(n) && tartalmaz(n, 3)) {
+            return "fizz"
+        } else if (oszthatoOttel(n) && tartalmaz(n, 5)) {
+            return "buzz"
+        } else if (oszthatoHarommal(n) || tartalmaz(n, 3)) {
+            return String(n)
+        } else {
+            return String(n)
+        }
+    }
+
+    // QUnit tesztek
+
+    QUnit.test("Az input 0", function(assert) {
+        assert.equal(fizzbuzz(0), "fizzbuzz")
+    });
+
+    QUnit.test("Az input 1", function(assert) {
+        assert.equal(fizzbuzz(1), "1")
+    });
+
+    QUnit.test("Az input 3", function(assert) {
+        assert.equal(fizzbuzz(3), "fizz")
+    });
+
+    QUnit.test("Az input 5", function(assert) {
+        assert.equal(fizzbuzz(5), "buzz")
+    });
+
+    QUnit.test("Az input 15", function(assert) {
+        assert.equal(fizzbuzz(15), "fizzbuzz")
+    });
+
+</script>
+
+</body>
+</html>
