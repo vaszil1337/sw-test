@@ -129,6 +129,17 @@
       <div id="qunit"></div>
       <div id="qunit-fixture"></div>
     </section>
+    <main>
+      <h1>Arab szám → római szám</h1>
+      <p class="hint">Adj meg egy egész számot 1 és 3999 között.</p>
+      <form id="converter-form">
+        <label for="arabic-number">Arab szám</label>
+        <input id="arabic-number" name="arabic-number" type="number" min="1" max="3999" step="1" required>
+        <button type="submit">Átalakítás</button>
+      </form>
+      <p id="error" role="alert" aria-live="polite"></p>
+      <p id="result" aria-live="polite"></p>
+    </main>
   </div>
 
   <script>
@@ -235,6 +246,24 @@
         assert.throws(() => convertArabicToRoman(null));
       });
     });
+
+    const form = document.querySelector("#converter-form");
+    const input = document.querySelector("#arabic-number");
+    const result = document.querySelector("#result");
+    const error = document.querySelector("#error");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      error.textContent = "";
+      result.textContent = "";
+
+      try {
+        result.textContent = convertArabicToRoman(Number(input.value));
+      } catch (conversionError) {
+        error.textContent = conversionError.message;
+      }
+    });
+
   </script>
 </body>
 </html>
