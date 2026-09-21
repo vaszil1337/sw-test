@@ -134,54 +134,6 @@
   <script>
     "use strict";
 
-    QUnit.module("Arab szám → római szám");
-
-    QUnit.test("1 → I", (assert) => {
-      assert.equal(convertArabicToRoman(1), "I");
-    });
-
-    QUnit.test("2 → II és 3 → III", (assert) => {
-      assert.equal(convertArabicToRoman(2), "II");
-      assert.equal(convertArabicToRoman(3), "III");
-    });
-
-    QUnit.test("4 → IV", (assert) => {
-      assert.equal(convertArabicToRoman(4), "IV");
-    });
-
-    QUnit.test("5 → V", (assert) => {
-      assert.equal(convertArabicToRoman(5), "V");
-    });
-
-    QUnit.test("9 → IX", (assert) => {
-      assert.equal(convertArabicToRoman(9), "IX");
-    });
-
-    QUnit.test("10 → X és 14 → XIV", (assert) => {
-      assert.equal(convertArabicToRoman(10), "X");
-      assert.equal(convertArabicToRoman(14), "XIV");
-    });
-
-    QUnit.test("40 → XL", (assert) => {
-      assert.equal(convertArabicToRoman(40), "XL");
-    });
-
-    QUnit.test("58 → LVIII", (assert) => {
-      assert.equal(convertArabicToRoman(58), "LVIII");
-    });
-
-    QUnit.test("944 → CMXLIV", (assert) => {
-      assert.equal(convertArabicToRoman(944), "CMXLIV");
-    });
-
-    QUnit.test("1994 → MCMXCIV", (assert) => {
-      assert.equal(convertArabicToRoman(1994), "MCMXCIV");
-    });
-
-    QUnit.test("3999 → MMMCMXCIX", (assert) => {
-      assert.equal(convertArabicToRoman(3999), "MMMCMXCIX");
-    });
-
     function convertArabicToRoman(number) {
       const values = [
         [1000, "M"], [900, "CM"], [500, "D"], [400, "CD"],
@@ -199,6 +151,61 @@
       });
       return roman;
     }
+
+    QUnit.module("Alapszámok és egyszerű ismétlődések", () => {
+      QUnit.test("1 → I", (assert) => {
+        assert.equal(convertArabicToRoman(1), "I");
+      });
+
+      QUnit.test("2 → II és 3 → III", (assert) => {
+        assert.equal(convertArabicToRoman(2), "II");
+        assert.equal(convertArabicToRoman(3), "III");
+      });
+
+      QUnit.test("5 → V és 10 → X", (assert) => {
+        assert.equal(convertArabicToRoman(5), "V");
+        assert.equal(convertArabicToRoman(10), "X");
+      });
+    });
+
+    QUnit.module("Kivonásos szabályok (speciális esetek)", () => {
+      QUnit.test("4 → IV és 9 → IX", (assert) => {
+        assert.equal(convertArabicToRoman(4), "IV");
+        assert.equal(convertArabicToRoman(9), "IX");
+      });
+
+      QUnit.test("40 → XL és 90 → XC", (assert) => {
+        assert.equal(convertArabicToRoman(40), "XL");
+        assert.equal(convertArabicToRoman(90), "XC");
+      });
+
+      QUnit.test("400 → CD és 900 → CM", (assert) => {
+        assert.equal(convertArabicToRoman(400), "CD");
+        assert.equal(convertArabicToRoman(900), "CM");
+      });
+    });
+
+    QUnit.module("Összetett számok és határértékek", () => {
+      QUnit.test("14 → XIV", (assert) => {
+        assert.equal(convertArabicToRoman(14), "XIV");
+      });
+
+      QUnit.test("58 → LVIII", (assert) => {
+        assert.equal(convertArabicToRoman(58), "LVIII");
+      });
+
+      QUnit.test("944 → CMXLIV", (assert) => {
+        assert.equal(convertArabicToRoman(944), "CMXLIV");
+      });
+
+      QUnit.test("1994 → MCMXCIV", (assert) => {
+        assert.equal(convertArabicToRoman(1994), "MCMXCIV");
+      });
+
+      QUnit.test("3999 → MMMCMXCIX", (assert) => {
+        assert.equal(convertArabicToRoman(3999), "MMMCMXCIX");
+      });
+    });
   </script>
 </body>
 </html>
