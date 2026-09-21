@@ -145,6 +145,23 @@
       assert.equal(convertArabicToRoman(3), "III");
     });
 
+    QUnit.test("4 → IV", (assert) => {
+      assert.equal(convertArabicToRoman(4), "IV");
+    });
+
+    QUnit.test("5 → V", (assert) => {
+      assert.equal(convertArabicToRoman(5), "V");
+    });
+
+    QUnit.test("9 → IX", (assert) => {
+      assert.equal(convertArabicToRoman(9), "IX");
+    });
+
+    QUnit.test("10 → X és 14 → XIV", (assert) => {
+      assert.equal(convertArabicToRoman(10), "X");
+      assert.equal(convertArabicToRoman(14), "XIV");
+    });
+
     function convertArabicToRoman(number) {
       let result = "";
       while (number >= 1) {
