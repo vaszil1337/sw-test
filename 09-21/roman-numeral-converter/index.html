@@ -136,6 +136,10 @@
 
     QUnit.module("Arab szám → római szám");
 
+    QUnit.test("1 → I", (assert) => {
+      assert.equal(convertArabicToRoman(1), "I");
+    });
+
     function convertArabicToRoman(number) {
     }
   </script>
