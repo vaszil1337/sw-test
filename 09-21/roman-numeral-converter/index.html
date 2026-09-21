@@ -140,6 +140,11 @@
       assert.equal(convertArabicToRoman(1), "I");
     });
 
+    QUnit.test("2 → II és 3 → III", (assert) => {
+      assert.equal(convertArabicToRoman(2), "II");
+      assert.equal(convertArabicToRoman(3), "III");
+    });
+
     function convertArabicToRoman(number) {
       return "I";
     }
