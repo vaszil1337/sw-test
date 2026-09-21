@@ -206,6 +206,31 @@
         assert.equal(convertArabicToRoman(3999), "MMMCMXCIX");
       });
     });
+
+    QUnit.module("Érvénytelen bemenetek hibakezelése", () => {
+      QUnit.test("0 hibás bemenet (tartomány alatti)", (assert) => {
+        assert.throws(() => convertArabicToRoman(0));
+      });
+
+      QUnit.test("Negatív számok hibás bemenetek", (assert) => {
+        assert.throws(() => convertArabicToRoman(-1));
+        assert.throws(() => convertArabicToRoman(-50));
+      });
+
+      QUnit.test("4000 hibás bemenet (tartomány feletti)", (assert) => {
+        assert.throws(() => convertArabicToRoman(4000));
+      });
+
+      QUnit.test("Nem egész számok hibás bemenetek", (assert) => {
+        assert.throws(() => convertArabicToRoman(1.5));
+        assert.throws(() => convertArabicToRoman(3.14));
+      });
+
+      QUnit.test("Nem numerikus értékek hibás bemenetek", (assert) => {
+        assert.throws(() => convertArabicToRoman("14"));
+        assert.throws(() => convertArabicToRoman(null));
+      });
+    });
   </script>
 </body>
 </html>
