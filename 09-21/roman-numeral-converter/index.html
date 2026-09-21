@@ -162,6 +162,26 @@
       assert.equal(convertArabicToRoman(14), "XIV");
     });
 
+    QUnit.test("40 → XL", (assert) => {
+      assert.equal(convertArabicToRoman(40), "XL");
+    });
+
+    QUnit.test("58 → LVIII", (assert) => {
+      assert.equal(convertArabicToRoman(58), "LVIII");
+    });
+
+    QUnit.test("944 → CMXLIV", (assert) => {
+      assert.equal(convertArabicToRoman(944), "CMXLIV");
+    });
+
+    QUnit.test("1994 → MCMXCIV", (assert) => {
+      assert.equal(convertArabicToRoman(1994), "MCMXCIV");
+    });
+
+    QUnit.test("3999 → MMMCMXCIX", (assert) => {
+      assert.equal(convertArabicToRoman(3999), "MMMCMXCIX");
+    });
+
     function convertArabicToRoman(number) {
       const values = [
         [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]
