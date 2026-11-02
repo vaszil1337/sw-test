@@ -8,7 +8,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,5 +53,16 @@ class BankServiceTest {
         assertEquals(500.0, account.getBalance());
         verify(mockNotificationService)
                 .send("Deposit successful");
+    }
+
+    @Test
+    @DisplayName("Sikertelen befizetés esetén nem történik értesítés")
+    void failedDepositDoesNotSendNotification() {
+        BankAccount account = new BankAccount();
+
+        assertThrows(IllegalArgumentException.class, () -> injectedBankService.deposit(account, -100));
+        assertThrows(IllegalArgumentException.class, () -> injectedBankService.deposit(account, 0));
+
+        verify(mockNotificationService, never()).send(anyString());
     }
 }

@@ -1,25 +1,28 @@
-# BankAccount – Banki számlavezető modul
+# Mock objektumok használata (Mockito)
 
-A projekt egy egyszerű bankszámlát (`BankAccount`) modellező Java osztályt és annak JUnit 5 egységtesztjeit tartalmazza.
+A projekt a Mockito keretrendszer használatát mutatja be egységtesztekben, külső függőségek szimulálásával a korábbi `BankAccount` osztály kiegészítéseként.
 
-## Fő funkciók
-- Számla létrehozása 0 kezdőegyenleggel
-- Befizetés (`deposit`): pozitív összeg jóváírása
-- Pénzfelvétel (`withdraw`): egyenleget meg nem haladó pozitív összeg levonása
-- Egyenleglekérdezés (`getBalance`)
-- Bemenet-ellenőrzés: érvénytelen műveleteknél (0, negatív összeg, egyenleghiány) `IllegalArgumentException` kivétel dobása az egyenleg megváltoztatása nélkül
+## Fő összetevők
+- `NotificationService`: Értesítési interfész (`send(String message)`).
+- `BankService`: Szolgáltatás, amely a számlára történő befizetés után értesítést küld a konstruktoron keresztül kapott `NotificationService` segítségével (Dependency Injection).
+- `ExchangeRateService`: Devizaárfolyam-lekérdező interfész (`getRate(String from, String to)`).
+
+## Alkalmazott Mockito funkciók
+- **`mock()`**: Dinamikus ál-objektum létrehozása interfészekből valódi hálózati/külső hívások nélkül.
+- **`@Mock` és `@InjectMocks`**: Deklaratív mockolás és automatikus függőséginjektálás tesztkörnyezetben.
+- **`verify()`**: Annak ellenőrzése, hogy a sikeres befizetés után meghívódott-e az értesítésküldés.
+- **`never()`**: Annak igazolása, hogy érvénytelen/sikertelen befizetés esetén nem történik értesítés.
+- **`when(...).thenReturn(...)`**: Előre definiált válaszértékek (pl. EUR/HUF árfolyam) beállítása és tesztelése.
 
 ## Futtatás és tesztelés
 
-A projekt fordítása és a tesztek futtatása a `10-19/bank-service` könyvtárból Maven segítségével végezhető:
+A tesztek futtatása a `10-19/bank-service` könyvtárból:
 
 ```bash
 mvn clean test
 ```
 
-Kifejezetten a `BankAccountTest` osztály futtatása:
+Külön a Mockito tesztek futtatása:
 ```bash
-mvn test -Dtest=BankAccountTest
+mvn test -Dtest=BankServiceTest,ExchangeRateServiceTest
 ```
-
-A tesztesetek az összes előírt esetet lefedik (kezdőegyenleg, befizetés, felvétel, határértékek, kivételkezelés és egyenleg változatlanságának ellenőrzése sikertelen műveletek után).
