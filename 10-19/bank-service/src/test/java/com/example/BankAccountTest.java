@@ -58,18 +58,21 @@ class BankAccountTest {
     void testWithdrawExceedingBalanceThrowsException() {
         account.deposit(500);
         assertThrows(IllegalArgumentException.class, () -> account.withdraw(600));
+        assertEquals(500.0, account.getBalance());
     }
 
     @Test
     @DisplayName("7. Negatív befizetés kivételt dob")
     void testNegativeDepositThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> account.deposit(-100));
+        assertEquals(0.0, account.getBalance());
     }
 
     @Test
     @DisplayName("8. 0 összegű befizetés kivételt dob")
     void testZeroDepositThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> account.deposit(0));
+        assertEquals(0.0, account.getBalance());
     }
 
     @Test
@@ -77,6 +80,7 @@ class BankAccountTest {
     void testNegativeWithdrawThrowsException() {
         account.deposit(500);
         assertThrows(IllegalArgumentException.class, () -> account.withdraw(-50));
+        assertEquals(500.0, account.getBalance());
     }
 
     @Test
@@ -84,5 +88,23 @@ class BankAccountTest {
     void testZeroWithdrawThrowsException() {
         account.deposit(500);
         assertThrows(IllegalArgumentException.class, () -> account.withdraw(0));
+        assertEquals(500.0, account.getBalance());
+    }
+
+    @Test
+    @DisplayName("11. Sikertelen műveletek után az egyenleg változatlan marad")
+    void testBalanceRemainsUnchangedAfterFailedOperations() {
+        account.deposit(1000);
+
+        // Sikertelen befizetések
+        assertThrows(IllegalArgumentException.class, () -> account.deposit(-200));
+        assertThrows(IllegalArgumentException.class, () -> account.deposit(0));
+        assertEquals(1000.0, account.getBalance());
+
+        // Sikertelen felvételek
+        assertThrows(IllegalArgumentException.class, () -> account.withdraw(1500));
+        assertThrows(IllegalArgumentException.class, () -> account.withdraw(-100));
+        assertThrows(IllegalArgumentException.class, () -> account.withdraw(0));
+        assertEquals(1000.0, account.getBalance());
     }
 }
